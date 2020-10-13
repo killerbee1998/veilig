@@ -29,16 +29,76 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
         passCharCode = Math.random() * (max - min) + min
 
         if(if_specials === 0){
-            while( (passCharCode >=58 || passCharCode<=64) ){
-                Math.random() * (max - min) + min
-            }
-            
-            while( (passCharCode >=91 || passCharCode<=96) ){
-                Math.random() * (max - min) + min
+
+            let p = [0,0,0]
+            if(if_nums === 0){
+                p[0] = Math.random() * (57 - 48) + 48
             }
 
-            while( (passCharCode >=123 || passCharCode<=126) ){
-                Math.random() * (max - min) + min
+            if(if_caps === 0){
+                p[1] = Math.random() * (90 - 65) + 65
+            }
+
+            p[2] = Math.random() * (122 - 97) + 97
+
+            if(p[0] !== 0 && p[1] !== 0){
+                passCharCode =  p[Math.ceil(Math.random() * 2)]
+            }else if(p[0] !== 0 && p[1] === 0){
+                let rands = Math.ceil(Math.random())
+                if(rands === 0){
+                    passCharCode = p[0]
+                }else{
+                    passCharCode = p[2]
+                }
+            }else if(p[0] === 0 && p[1] !== 0){
+                let rands = Math.ceil(Math.random())
+                if(rands === 0){
+                    passCharCode = p[1]
+                }else{
+                    passCharCode = p[2]
+                }
+            }else{
+                passCharCode = p[2]
+            }
+            
+            
+        }
+
+        if(if_caps === 0){
+
+            let p = [0,0,0,0]
+            if(if_nums !== 0){
+                p[0] = Math.random() * (57 - 48) + 48
+            }
+
+            if(if_specials !== 0 ){
+                p[1] = Math.random() * (58 - 64) + 58
+                p[2] = Math.random() * (96 - 91) + 91
+            }
+
+            p[3] = Math.random() * (122 - 97) + 97
+
+            if(p[0] !== 0 && p[1] !== 0 && p[2] !== 0){
+                passCharCode =  p[Math.ceil(Math.random() * 3)]
+            }else if(p[0] !== 0 && p[1] === 0 && p[2] === 0){
+                let rands = Math.ceil(Math.random())
+                if(rands === 0){
+                    passCharCode = p[0]
+                }else{
+                    passCharCode = p[3]
+                }
+            }else if(p[0] === 0 && p[1] !== 0 && p[2] !== 0){
+                let rands = Math.ceil(Math.random() * 2)
+                print(rands)
+                if(rands === 0){
+                    passCharCode = p[1]
+                }else if(rands === 1){
+                    passCharCode = p[2]
+                }else{
+                    passCharCode = p[3]
+                }
+            }else{
+                passCharCode = p[2]
             }
             
             

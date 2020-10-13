@@ -32,11 +32,11 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
         if(if_specials === 0){
 
             let p = [0,0,0]
-            if(if_nums === 0){
+            if(if_nums !== 0){
                 p[0] = Math.random() * (57 - 48) + 48
             }
 
-            if(if_caps === 0){
+            if(if_caps !== 0){
                 p[1] = Math.random() * (90 - 65) + 65
             }
 
@@ -51,21 +51,21 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
                 }else if(rands < 1.5){
                     passCharCode = p[1]
                 }else{
-                    passCharCode = p[3]
+                    passCharCode = p[2]
                 }
 
-            // if only caps are also off 
+            // if only numbers are on
             }else if(p[0] !== 0 && p[1] === 0){
-                let rands = Math.ceil(Math.random())
+                let rands = Math.random()
                 if(rands < 0.5){
                     passCharCode = p[0]
                 }else{
                     passCharCode = p[2]
                 }
             
-            // if only numbers are also off 
+            // if only caps are on 
             }else if(p[0] === 0 && p[1] !== 0){
-                let rands = Math.ceil(Math.random())
+                let rands = Math.random()
                 if(rands < 0.5){
                     passCharCode = p[1]
                 }else{
@@ -94,11 +94,10 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             }
 
             p[3] = Math.random() * (122 - 97) + 97
-            console.log(p)
 
             // if both numbers and symbols flags are on
             if(p[0] !== 0 && p[1] !== 0 && p[2] !== 0){
-                let rands = Math.ceil(Math.random() * 3)
+                let rands = Math.random() * 3
                 if(rands < 0.5){
                     passCharCode = p[0]
                 }else if(rands < 1.5){
@@ -120,10 +119,10 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             
             // if only symbols flag is also on
             }else if(p[0] === 0 && p[1] !== 0 && p[2] !== 0){
-                let rands = Math.ceil(Math.random() * 2)
-                if(rands === 0){
+                let rands = Math.random() * 2
+                if(rands < 0.5){
                     passCharCode = p[1]
-                }else if(rands === 1){
+                }else if(rands < 1.5){
                     passCharCode = p[2]
                 }else{
                     passCharCode = p[3]

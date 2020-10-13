@@ -45,12 +45,19 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             
             // if both numbers and caps are o on
             if(p[0] !== 0 && p[1] !== 0){
-                passCharCode =  p[Math.ceil(Math.random() * 2)]
+                let rands = Math.random() * 2
+                if(rands < 0.5){
+                    passCharCode = p[0]
+                }else if(rands < 1.5){
+                    passCharCode = p[1]
+                }else{
+                    passCharCode = p[3]
+                }
 
             // if only caps are also off 
             }else if(p[0] !== 0 && p[1] === 0){
                 let rands = Math.ceil(Math.random())
-                if(rands === 0){
+                if(rands < 0.5){
                     passCharCode = p[0]
                 }else{
                     passCharCode = p[2]
@@ -59,7 +66,7 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             // if only numbers are also off 
             }else if(p[0] === 0 && p[1] !== 0){
                 let rands = Math.ceil(Math.random())
-                if(rands === 0){
+                if(rands < 0.5){
                     passCharCode = p[1]
                 }else{
                     passCharCode = p[2]
@@ -91,8 +98,17 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
 
             // if both numbers and symbols flags are on
             if(p[0] !== 0 && p[1] !== 0 && p[2] !== 0){
-                passCharCode =  p[Math.ceil(Math.random() * 3)]
-            
+                let rands = Math.ceil(Math.random() * 3)
+                if(rands < 0.5){
+                    passCharCode = p[0]
+                }else if(rands < 1.5){
+                    passCharCode = p[1]
+                }else if(rands < 2.5){
+                    passCharCode =p[2]
+                }else{
+                    passCharCode = p[3]
+                }            
+
             // if only numbers flag is also on
             }else if(p[0] !== 0 && p[1] === 0 && p[2] === 0){
                 let rands = Math.random()

@@ -28,6 +28,7 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
     for(let i=0;i<len;++i){
         passCharCode = Math.random() * (max - min) + min
 
+        // if special flag is off 
         if(if_specials === 0){
 
             let p = [0,0,0]
@@ -40,9 +41,13 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             }
 
             p[2] = Math.random() * (122 - 97) + 97
-
+            console.log(p)
+            
+            // if both numbers and caps are o on
             if(p[0] !== 0 && p[1] !== 0){
                 passCharCode =  p[Math.ceil(Math.random() * 2)]
+
+            // if only caps are also off 
             }else if(p[0] !== 0 && p[1] === 0){
                 let rands = Math.ceil(Math.random())
                 if(rands === 0){
@@ -50,6 +55,8 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
                 }else{
                     passCharCode = p[2]
                 }
+            
+            // if only numbers are also off 
             }else if(p[0] === 0 && p[1] !== 0){
                 let rands = Math.ceil(Math.random())
                 if(rands === 0){
@@ -57,6 +64,8 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
                 }else{
                     passCharCode = p[2]
                 }
+            
+            // if both numbers and caps are also off
             }else{
                 passCharCode = p[2]
             }
@@ -64,6 +73,7 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             
         }
 
+        // if caps flag is turned off
         if(if_caps === 0){
 
             let p = [0,0,0,0]
@@ -77,19 +87,24 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
             }
 
             p[3] = Math.random() * (122 - 97) + 97
+            console.log(p)
 
+            // if both numbers and symbols flags are on
             if(p[0] !== 0 && p[1] !== 0 && p[2] !== 0){
                 passCharCode =  p[Math.ceil(Math.random() * 3)]
+            
+            // if only numbers flag is also on
             }else if(p[0] !== 0 && p[1] === 0 && p[2] === 0){
-                let rands = Math.ceil(Math.random())
-                if(rands === 0){
+                let rands = Math.random()
+                if(rands < 0.5){
                     passCharCode = p[0]
                 }else{
                     passCharCode = p[3]
                 }
+            
+            // if only symbols flag is also on
             }else if(p[0] === 0 && p[1] !== 0 && p[2] !== 0){
                 let rands = Math.ceil(Math.random() * 2)
-                print(rands)
                 if(rands === 0){
                     passCharCode = p[1]
                 }else if(rands === 1){
@@ -97,8 +112,10 @@ app.get('/pass/len=:len/flags=:flags', (req, res) =>{
                 }else{
                     passCharCode = p[3]
                 }
+            
+            // if both numbers and symbols flags are also off
             }else{
-                passCharCode = p[2]
+                passCharCode = p[3]
             }
             
             

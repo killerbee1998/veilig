@@ -9,7 +9,7 @@ app.get('/', (req, res) =>{
 })
 
 // pass func
-app.get('/pass/len=:len/flags=:flags', (req, res) =>{
+app.get('/pass/len=:len/passFlags=:flags', (req, res) =>{
     let {len, flags} = req.params
     const passgen = require('./passgen')
     const pass = passgen.passgen(len, flags)

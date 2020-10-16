@@ -36,4 +36,4 @@ all_words = set([])
 for i in fnames:
     all_words.update(word_lists(i))
 
-print(all_words)
+print(list(all_words))

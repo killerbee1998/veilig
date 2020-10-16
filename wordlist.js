@@ -1,32 +1,16 @@
-const fs = require('fs')
-let wordlist1 = []
-let wordlist2 = []
+const {PythonShell} = require('python-shell')
+const pyShell = new PythonShell('words.py')
 
-fs.readFile('./wordlist/wordlist_UK.txt', 'utf8', (err, data) =>{
-    data = data.split('\n')
-    
-    for(let i=0;i<data.length;++i){
-        if( (data[i][0]>='a' && data[i][0]<='z')){
-            wordlist1.push(data[i])
-        }
-    }
+let wordlist = ''
 
-    console.log(wordlist1)
-
+pyShell.on('message', (msg)=>{
+    wordlist = msg
+    console.log(wordlist)
 })
 
-fs.readFile('./wordlist/wordlist_US.txt', 'utf8', (err, data) =>{
-    data = data.split('\n')
-    
-    for(let i=0;i<data.length;++i){
-        if( (data[i][0]>='a' && data[i][0]<='z')){
-            wordlist2.push(data[i])
-        }
+
+pyShell.end( (err) =>{
+    if(err){
+        throw err
     }
-
-    console.log(wordlist2)
-
 })
-
-let total_wordlist = wordlist1.concat(wordlist2)
-console.log(total_wordlist)

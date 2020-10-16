@@ -1,16 +1,18 @@
 const {PythonShell} = require('python-shell')
-const pyShell = new PythonShell('words.py')
+
+let options = {
+    mode: 'text',
+    pythonPath: 'path/to/python',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: 'wordlist.py',
+    args: ['value1', 'value2', 'value3']
+};
 
 let wordlist = ''
 
-pyShell.on('message', (msg)=>{
-    wordlist = msg
+PythonShell.run('words.py', null, (err, res) =>{
+    wordlist = res
     console.log(wordlist)
 })
 
-
-pyShell.end( (err) =>{
-    if(err){
-        throw err
-    }
-})
+console.log(wordlist)

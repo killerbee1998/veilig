@@ -37,5 +37,10 @@ for i in fnames:
     all_words.update(word_lists(i))
 
 all_words = list(all_words)
+f2 = open('wordlist/all_words.txt', 'w')
+f2.close()
+
 for i in all_words:
-    print(i)
+    temp_f = open('wordlist/all_words.txt', 'a')
+    temp_f.write(i+"\n")
+    temp_f.close()

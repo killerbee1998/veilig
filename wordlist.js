@@ -1,18 +1,11 @@
 const {PythonShell} = require('python-shell')
 
-let options = {
-    mode: 'text',
-    pythonPath: 'path/to/python',
-    pythonOptions: ['-u'], // get print results in real-time
-    scriptPath: 'wordlist.py',
-    args: ['value1', 'value2', 'value3']
-};
+let get_words = async() =>{
+    let wordlist = ''
 
-let wordlist = ''
+    const res = await PythonShell.run('words.py', null, (err, res) =>{
+        console.log(res)
+    })
+}
 
-PythonShell.run('words.py', null, (err, res) =>{
-    wordlist = res
-    console.log(wordlist)
-})
-
-console.log(wordlist)
+get_words()

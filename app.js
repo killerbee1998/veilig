@@ -8,7 +8,7 @@ app.get('/', (req, res) =>{
     res.status(200).json("This is root path")
 })
 
-// password func
+// password func(MAIN)
 app.get('/pass/len=:len/passFlags=:flags', (req, res) =>{
     let {len, flags} = req.params
     const passgen = require('./passgen')
@@ -16,6 +16,31 @@ app.get('/pass/len=:len/passFlags=:flags', (req, res) =>{
 
     res.status(200).json(pass)
 })
+
+// passfunc(alt routes)
+app.get('/pass/len=:len/', (req, res) =>{
+    let {len} = req.params
+    const passgen = require('./passgen')
+    const pass = passgen.passgen(len, '111')
+
+    res.status(200).json(pass)
+})
+
+app.get('/pass/passFlags=:flags', (req, res) =>{
+    let {flags} = req.params
+    const passgen = require('./passgen')
+    const pass = passgen.passgen('10', flags)
+
+    res.status(200).json(pass)
+})
+
+app.get('/pass', (req, res) =>{
+    const passgen = require('./passgen')
+    const pass = passgen.passgen('10', '111')
+
+    res.status(200).json(pass)
+})
+
 
 
 // passphrase func

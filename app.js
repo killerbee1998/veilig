@@ -44,18 +44,16 @@ app.get('/pass', (req, res) =>{
 
 
 // passphrase func
-app.get('/passphrase/n_words=:n_words', (req, res)=>{
-    let {n_words} = req.params
+app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res)=>{
+    let {n_words, flags} = req.params
     const get_word = require('./get_word')
 
     let passphrase = ''
     for(let i=0;i<n_words;++i){
-        passphrase += get_word.get_random_word()+'-'
+        passphrase += get_word.get_random_word(flags)+'-'
     }
 
     res.status(200).json(passphrase)
-
-
 })
 
 module.exports.app = app

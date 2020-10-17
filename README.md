@@ -11,7 +11,7 @@ API calls:
 
     2. /pass/len=:len/passFlags=:flags -> Path to generate passwords. 2 Arguments( len: length of password, flags: flags to keep in mind when generating passwords. A detailed description of flags is given bellow)
 
-    3. /passphrase/n_words=:n_words -> Path to generate passphrases. 1 Argument( n_words: number of words of the passphrase)
+    3. /passphrase/n_words=:n_words/passFlags=:flags -> Path to generate passphrases. 1 Argument( n_words: number of words of the passphrase)
 
 
 
@@ -20,7 +20,7 @@ API calls:
 
 Flag Descriptions:
     
-    1. passFLag: Used in path(/pass/len=:len/passFlags=:flags) to tailor custom passwords. 3 arguments(XXX), All binary(0/1)
+    1. passFLag: Used in paths(/pass, /passphrase) to tailor custom passwords. 3 arguments(XXX), All binary(0/1)
 
         1. if_nums: Describes if password should have numbers or not. 0 means numbers are not allowed, 1 means numbers are allowed.
 

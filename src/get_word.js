@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const data = fs.readFileSync('./wordlist/all_words.txt', {encoding: 'utf-8', flag: 'r'}).split('\n')
+const data = fs.readFileSync('./src/wordlist/all_words.txt', {encoding: 'utf-8', flag: 'r'}).split('\n')
 
 const get_random_word = (flags) =>{
     let random_word = data[Math.floor(Math.random() * (data.length+1))]

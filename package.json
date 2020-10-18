@@ -1,0 +1,30 @@
+{
+  "name": "veilig",
+  "version": "1.0.0",
+  "description": "Veilig password manager",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "python-shell": "^2.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/killerbee1998/veilig.git"
+  },
+  "keywords": [
+    "password",
+    "manager"
+  ],
+  "author": "killerbee1998",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/killerbee1998/veilig/issues"
+  },
+  "homepage": "https://github.com/killerbee1998/veilig#readme"
+}

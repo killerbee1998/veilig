@@ -78,7 +78,7 @@ const passgen = (len, flags) =>{
             }
 
             if(if_specials !== 0 ){
-                p[1] = Math.floor(Math.random() * (58 - 64 + 1) + 58)
+                p[1] = Math.floor(Math.random() * (64 - 58 + 1) + 58)
                 p[2] = Math.floor(Math.random() * (96 - 91 + 1) + 91)
             }
 

@@ -90,6 +90,7 @@ app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res)=>{
         res.send(400).json("Length out of bounds")
     }
 
+    
     if(flags.length != 3){
         res.send(400).json("Incorrect passFLags format")
     }

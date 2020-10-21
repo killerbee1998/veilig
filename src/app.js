@@ -86,8 +86,22 @@ app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res)=>{
     let {n_words, flags} = req.params
 
 
-    if(n_words < 3 || len > 20){
+    if(n_words < 3 || n_words > 20){
         res.send(400).json("Length out of bounds")
+    }
+
+    if(flags.length != 3){
+        res.send(400).json("Incorrect passFLags format")
+    }
+
+    if( !(flags[0] == '0' || flags[0]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
+    if( !(flags[1] == '0' || flags[1]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
+    if( !(flags[1] == '0' || flags[1]=='1')){
+        res.send(400).json("Incorrect passFlags format")
     }
 
     const get_word = require('./get_word')

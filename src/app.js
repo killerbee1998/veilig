@@ -39,6 +39,11 @@ app.get('/pass/len=:len/passFlags=:flags', (req, res) =>{
 // passfunc(alt routes)
 app.get('/pass/len=:len/', (req, res) =>{
     let {len} = req.params
+
+    if(len < 5 || len > 200){
+        res.send(400).json("Length out of bounds")
+    }
+
     const passgen = require('./passgen')
     const pass = passgen.passgen(len, '111')
 
@@ -47,6 +52,20 @@ app.get('/pass/len=:len/', (req, res) =>{
 
 app.get('/pass/passFlags=:flags', (req, res) =>{
     let {flags} = req.params
+
+    if(flags.length != 3){
+        res.send(400).json("Incorrect passFLags format")
+    }
+
+    if( !(flags[0] == '0' || flags[0]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
+    if( !(flags[1] == '0' || flags[1]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
+    if( !(flags[1] == '0' || flags[1]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
     const passgen = require('./passgen')
     const pass = passgen.passgen('10', flags)
 

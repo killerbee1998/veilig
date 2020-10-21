@@ -12,12 +12,22 @@ app.get('/', (req, res) =>{
 app.get('/pass/len=:len/passFlags=:flags', (req, res) =>{
     let {len, flags} = req.params
 
-    if(len < 3 || len > 200){
+    if(len < 5 || len > 200){
         res.send(400).json("Length out of bounds")
     }
 
     if(flags.length != 3){
-        res.send(400).json("Incorrent passFLags format")
+        res.send(400).json("Incorrect passFLags format")
+    }
+
+    if( !(flags[0] == '0' || flags[0]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
+    if( !(flags[1] == '0' || flags[1]=='1')){
+        res.send(400).json("Incorrect passFlags format")
+    }
+    if( !(flags[1] == '0' || flags[1]=='1')){
+        res.send(400).json("Incorrect passFlags format")
     }
 
     const passgen = require('./passgen')

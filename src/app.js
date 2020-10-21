@@ -84,6 +84,12 @@ app.get('/pass', (req, res) =>{
 // passphrase func
 app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res)=>{
     let {n_words, flags} = req.params
+
+
+    if(n_words < 3 || len > 20){
+        res.send(400).json("Length out of bounds")
+    }
+
     const get_word = require('./get_word')
 
     let passphrase = ''

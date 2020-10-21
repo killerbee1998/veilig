@@ -11,6 +11,15 @@ app.get('/', (req, res) =>{
 // password func(MAIN)
 app.get('/pass/len=:len/passFlags=:flags', (req, res) =>{
     let {len, flags} = req.params
+
+    if(len < 3 || len > 200){
+        res.send(400).json("Length out of bounds")
+    }
+
+    if(flags.length != 3){
+        res.send(400).json("Incorrent passFLags format")
+    }
+
     const passgen = require('./passgen')
     const pass = passgen.passgen(len, flags)
 

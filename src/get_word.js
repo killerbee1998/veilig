@@ -30,7 +30,6 @@ const get_random_word = (flags) =>{
     // Capitalizes  the 1st letter
     if(if_caps === 1){
         let ss = random_word[0].charCodeAt() - 32
-        console.log(ss, String.fromCharCode(ss))
         random_word = random_word.replace(random_word[0], String.fromCharCode(ss))
     }
 

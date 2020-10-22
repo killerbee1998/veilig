@@ -101,3 +101,22 @@ describe('pass/passFlags', () =>{
     })
 
 })
+
+
+describe('passphrase/n_words', () =>{
+    test("n_words=3", async () =>{
+        const res = await req(app).get('/passphrase/n_words=3/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("n_words=1", async () =>{
+        const res = await req(app).get('/passphrase/n_words=1/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("n_words=100", async () =>{
+        const res = await req(app).get('/passphrase/n_words=100/')
+        expect(res.statusCode).toBe(400)
+    })
+ 
+})

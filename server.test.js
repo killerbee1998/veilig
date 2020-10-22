@@ -120,3 +120,72 @@ describe('passphrase/n_words', () =>{
     })
  
 })
+
+describe('passphrase/passFlags', () =>{
+
+    test("flags=000", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=000/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=001", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=001/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=010", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=010/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=011", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=011/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=100", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=100/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=101", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=101/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=110", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=110/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=111", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=111/')
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("flags=01", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=01/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=1", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=1/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=000000", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=000000/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=aaa", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=aaa/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=a", async () =>{
+        const res = await req(app).get('/passphrase/passFlags=a/')
+        expect(res.statusCode).toBe(400)
+    })
+
+})

@@ -75,4 +75,29 @@ describe('pass/passFlags', () =>{
         expect(res.statusCode).toBe(200)
     })
 
+    test("flags=01", async () =>{
+        const res = await req(app).get('/pass/passFlags=01/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=1", async () =>{
+        const res = await req(app).get('/pass/passFlags=1/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=000000", async () =>{
+        const res = await req(app).get('/pass/passFlags=000000/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=aaa", async () =>{
+        const res = await req(app).get('/pass/passFlags=aaa/')
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("flags=a", async () =>{
+        const res = await req(app).get('/pass/passFlags=a/')
+        expect(res.statusCode).toBe(400)
+    })
+
 })

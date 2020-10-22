@@ -40,7 +40,11 @@ all_words = list(all_words)
 f2 = open('wordlist/all_words.txt', 'w')
 f2.close()
 
-for i in all_words:
+for i in range(len(all_words)):
     temp_f = open('wordlist/all_words.txt', 'a')
-    temp_f.write(i+"\n")
+    temp_f.write(all_words[i])
+
+    if(i != len(all_words)-1):
+        temp_f.write("\n")
+
     temp_f.close()

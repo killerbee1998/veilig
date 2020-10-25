@@ -210,4 +210,31 @@ app.post('/login', async (req, res) => {
     }
 })
 
+//register func
+app.post("/register", (req, res) => {
+
+    const {name, email, password } = req.body;
+    let hash_password = bcrypt.hashSync(password, hashStr);
+    
+    if (email === null || password === null) {
+        res.json("Empty Email or password");
+    }
+  
+    let new_user = {
+        user_id: email,
+        name: name,
+        pass_hash: hash_password
+    }
+  
+    pg('users')
+    .insert(new_user)
+    .then( () =>{
+        res.status(200).json("REGISTERED");
+    })
+    .catch( (err) =>{
+        res.status(400).json("REGISTRATION ERROR")
+    });
+  
+})
+  
 module.exports.app = app

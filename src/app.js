@@ -1,7 +1,17 @@
 // express
 const express = require("express")
-const {passgen} = require("./passgen")
 const app = express()
+
+// cors
+const cors = require('cors')
+app.use(cors())
+
+//bcrypt
+const bcrypt = require('bcrypt');
+const hashStr = 10;
+
+// local modules
+const {passgen} = require("./passgen")
 
 // root 
 app.get('/', (req, res) => {
@@ -186,7 +196,7 @@ app.post('/login', async (req, res) => {
     const userData = await pg.select('*').from('users').where({
         user_id: email
     })
-    
+
     const signinSuccess = bcrypt.compareSync(password, userData[0].pass_hash);
 
     if (signinSuccess) {

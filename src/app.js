@@ -218,7 +218,7 @@ app.post('/login', async (req, res) => {
         }
         res.status(200).json(mockUser)
     } else {
-        res.status(400).json("SIGNIN ERROR")
+        res.status(400).json("LOGIN ERROR")
     }
 })
 

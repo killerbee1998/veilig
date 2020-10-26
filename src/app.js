@@ -20,6 +20,10 @@ app.use(cors())
 const bcrypt = require('bcrypt');
 const hashStr = 10;
 
+// body-parser
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
 // local modules
 const {passgen} = require("./passgen")
 
@@ -223,7 +227,8 @@ app.post('/login', async (req, res) => {
 //register func
 app.post("/register", (req, res) => {
 
-    const {name, email, password } = req.body;
+    console.log(req.body)
+    const {email, password } = req.body;
     let hash_password = bcrypt.hashSync(password, hashStr);
     
     if (email === null || password === null) {
@@ -231,12 +236,11 @@ app.post("/register", (req, res) => {
     }
   
     let new_user = {
-        user_id: email,
-        name: name,
-        pass_hash: hash_password
+        master_email: email,
+        master_hash: hash_password
     }
   
-    pg('users')
+    pg('master')
     .insert(new_user)
     .then( () =>{
         res.status(200).json("REGISTERED");

@@ -32,10 +32,10 @@ Wrong/Empty emails/passwords will  yield a LOGIN ERROR
 
 **Flag Descriptions:**
     
-    1. passFLag: Used in paths(/pass, /passphrase) to tailor custom passwords. 3 arguments(XXX), All binary(0/1)
+1. passFLag: Used in paths(/pass, /passphrase) to tailor custom passwords. 3 arguments(XXX), All binary(0/1)
 
-        1. if_nums: Describes if password should have numbers or not. 0 means numbers are not allowed, 1 means numbers are allowed.
+    1. if_nums: Describes if password should have numbers or not. 0 means numbers are not allowed, 1 means numbers are allowed.
 
-        2. if_specials: Describes if password should have special characters or not. 0 means special characters are not allowed, 1 means special characters are allowed.
+    2. if_specials: Describes if password should have special characters or not. 0 means special characters are not allowed, 1 means special characters are allowed.
 
-        3. if_caps: Describes if password should have capital letters or not. 0 means capital letters are not allowed, 1 means capital letters are allowed.
+    3. if_caps: Describes if password should have capital letters or not. 0 means capital letters are not allowed, 1 means capital letters are allowed.

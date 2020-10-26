@@ -200,22 +200,21 @@ app.get('/passphrase/', (req, res) => {
 // user signin function
 app.post('/login', async (req, res) => {
 
-    const {email,password} = req.body;
+    const {email,pass} = req.body;
 
-    if (email === null || password === null) {
-        res.json("Empty Email or password");
+    if (email === null || pass === null) {
+        res.status(400).json("Empty Email or password");
     }
 
-    const userData = await pg.select('*').from('users').where({
-        user_id: email
+    const userData = await pg.select('*').from('master').where({
+        master_email: email
     })
 
-    const signinSuccess = bcrypt.compareSync(password, userData[0].pass_hash);
+    const signinSuccess = bcrypt.compareSync(pass, userData[0].master_hash);
 
     if (signinSuccess) {
         const mockUser = {
-            email: userData[0].user_id,
-            name: userData[0].name
+            email: userData[0].master_email,
         }
         res.status(200).json(mockUser)
     } else {

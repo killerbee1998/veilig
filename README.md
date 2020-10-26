@@ -17,6 +17,18 @@ Using this returns a password with the desired length and intended flags. Passwo
 
 Using this returns a passphrase with the desired number of words and intended flags.Passwords must have at least 3 words and at most 20 words.
 
+**POST requests**
+
+1. /register -> Path to register user. 2 Arguments in JSON body( email: email of user, pass: password of user)
+
+An user can only register once. attempting to register multiple times will yield a REGISTRATION ERROR.
+
+Empty emails/passwords will also yield a REGISTRATION ERROR
+
+2. /login -> Path to login user. 2 Arguments in JSON body( email: email of user, pass: password of user)
+
+Wrong/Empty emails/passwords will  yield a LOGIN ERROR
+
 
 **Flag Descriptions:**
     

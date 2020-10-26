@@ -227,17 +227,16 @@ app.post('/login', async (req, res) => {
 //register func
 app.post("/register", (req, res) => {
 
-    console.log(req.body)
-    const {email, password } = req.body;
-    let hash_password = bcrypt.hashSync(password, hashStr);
+    const {email, pass } = req.body;
+    let master_hash = bcrypt.hashSync(pass, hashStr);
     
-    if (email === null || password === null) {
+    if (email === null || pass === null) {
         res.json("Empty Email or password");
     }
   
     let new_user = {
         master_email: email,
-        master_hash: hash_password
+        master_hash: master_hash
     }
   
     pg('master')

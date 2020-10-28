@@ -247,5 +247,17 @@ app.post("/register", (req, res) => {
     });
   
 })
+
+//delete account func
+app.post("/del_acc", (req, res) => {
+
+    const {email, pass} = req.body;
+    let master_hash = bcrypt.hashSync(pass, hashStr);
+    
+    if (email === null || pass === null) {
+        res.json("Empty Email or password");
+    }
+    
+})
   
 module.exports.app = app

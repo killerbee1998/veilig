@@ -257,7 +257,22 @@ app.post("/del_acc", (req, res) => {
     if (email === null || pass === null) {
         res.json("Empty Email or password");
     }
-    
+  
+    let new_user = {
+        master_email: email,
+        master_hash: master_hash
+    }
+  
+    pg('master')
+    .where(new_user)
+    .del()
+    .then( () =>{
+        res.status(200).json("ACCOUNT DELETED");
+    })
+    .catch( (err) =>{
+        res.status(400).json("ACCOUNT DELETETION ERROR")
+    });
+  
 })
   
 module.exports.app = app

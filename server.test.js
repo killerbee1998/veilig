@@ -200,19 +200,22 @@ describe("All login func", ()=>{
     const user_only_email = {"email": "a@a"}
     const user_only_pass = {"pass": "A"}
 
-    test("Register with user_only_email", async() =>{
+    test("Register with user_only_email", async(done) =>{
         const res = await req(app).post('/register').send(user_only_email)
         expect(res.statusCode).toBe(400)
+        done()
     })
 
-    test("Register with user_only_pass", async() =>{
+    test("Register with user_only_pass", async(done) =>{
         const res = await req(app).post('/register').send(user_only_pass)
         expect(res.statusCode).toBe(400)
+        done()
     })
 
-    test("Register with user_body", async() =>{
+    test("Register with user_body", async(done) =>{
         const res = await req(app).post('/register').send(user_body)
         expect(res.statusCode).toBe(200)
+        done()
     })
 
     test("Register with user_body again", async() =>{
@@ -235,7 +238,17 @@ describe("All login func", ()=>{
         expect(res.statusCode).toBe(200)
     })
 
-    test("Delete user_body acc", async() =>{
+    test("Delete Acc with user_only_email", async() =>{
+        const res = await req(app).post('/del_acc').send(user_only_email)
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("Delete Acc with user_only_pass", async() =>{
+        const res = await req(app).post('/del_acc').send(user_only_pass)
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("Delete acc user_body", async() =>{
         const res = await req(app).post('/del_acc').send(user_body)
         expect(res.statusCode).toBe(200)
     })

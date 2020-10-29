@@ -236,7 +236,7 @@ app.post("/register", (req, res) => {
         master_email: email,
         master_hash: master_hash
     }
-  
+    
     pg('master')
     .insert(new_user)
     .then( () =>{
@@ -245,6 +245,37 @@ app.post("/register", (req, res) => {
     .catch( (err) =>{
         res.status(400).json("REGISTRATION ERROR")
     });
+  
+})
+
+//delete account func
+app.post("/del_acc", async(req, res) => {
+
+    const {email,pass} = req.body;
+
+    if (email === null || pass === null) {
+        res.status(400).json("Empty Email or password");
+    }
+
+    const userData = await pg.select('*').from('master').where({
+        master_email: email
+    })
+
+    const userFound = bcrypt.compareSync(pass, userData[0].master_hash);
+
+    if (userFound) {
+        pg('master')
+        .where({master_email: email})
+        .del()
+        .then( () =>{
+            res.status(200).json("ACCOUNT DELETED");
+        })
+        .catch( (err) =>{
+            res.status(400).json("ACCOUNT DELETETION ERROR")
+        });
+    } else {
+        res.status(400).json("ACCOUNT DELETETION ERROR")
+    }
   
 })
   

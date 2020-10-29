@@ -202,7 +202,7 @@ app.post('/login', async (req, res) => {
 
     const {email,pass} = req.body;
 
-    if (email === null || pass === null) {
+    if (email === null || pass === null || email === undefined || pass === undefined) {
         res.status(400).json("Empty Email or password");
     }
 
@@ -228,8 +228,8 @@ app.post("/register", (req, res) => {
     const {email, pass } = req.body;
     let master_hash = bcrypt.hashSync(pass, hashStr);
     
-    if (email === null || pass === null) {
-        res.json("Empty Email or password");
+    if (email === null || pass === null || email === undefined || pass === undefined) {
+        res.status(400).json("Empty Email or password");
     }
   
     let new_user = {
@@ -253,7 +253,7 @@ app.post("/del_acc", async(req, res) => {
 
     const {email,pass} = req.body;
 
-    if (email === null || pass === null) {
+    if (email === null || pass === null || email === undefined || pass === undefined) {
         res.status(400).json("Empty Email or password");
     }
 

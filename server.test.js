@@ -1,4 +1,5 @@
 const app = require('./src/app').app
+const pg = require("./src/app").pg
 const req = require('supertest')
 
 describe('Root path', () =>{
@@ -188,4 +189,54 @@ describe('passphrase/passFlags', () =>{
         expect(res.statusCode).toBe(400)
     })
 
+})
+
+describe("All login func", ()=>{
+    const user_body = {
+        "email": "a@a",
+        "pass": "A"
+    }
+
+    const user_only_email = {"email": "a@a"}
+    const user_only_pass = {"pass": "A"}
+
+    test("Register with user_only_email", async() =>{
+        const res = await req(app).post('/register').send(user_only_email)
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("Register with user_only_pass", async() =>{
+        const res = await req(app).post('/register').send(user_only_pass)
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("Register with user_body", async() =>{
+        const res = await req(app).post('/register').send(user_body)
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("Register with user_body again", async() =>{
+        const res = await req(app).post('/register').send(user_body)
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("Login with user_only_email", async() =>{
+        const res = await req(app).post('/login').send(user_only_email)
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("Register with user_only_pass", async() =>{
+        const res = await req(app).post('/login').send(user_only_pass)
+        expect(res.statusCode).toBe(400)
+    })
+    
+    test("Login with user_body", async() =>{
+        const res = await req(app).post('/login').send(user_body)
+        expect(res.statusCode).toBe(200)
+    })
+
+    test("Delete user_body acc", async() =>{
+        const res = await req(app).post('/del_acc').send(user_body)
+        expect(res.statusCode).toBe(200)
+    })
 })

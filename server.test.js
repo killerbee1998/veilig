@@ -225,11 +225,11 @@ describe("All login func", ()=>{
         expect(res.statusCode).toBe(400)
     })
 
-    test("Register with user_only_pass", async() =>{
+    test("Login with user_only_pass", async() =>{
         const res = await req(app).post('/login').send(user_only_pass)
         expect(res.statusCode).toBe(400)
     })
-    
+
     test("Login with user_body", async() =>{
         const res = await req(app).post('/login').send(user_body)
         expect(res.statusCode).toBe(200)

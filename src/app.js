@@ -202,8 +202,9 @@ app.post('/login', async (req, res) => {
 
     const {email,pass} = req.body;
 
-    if (email === null || pass === null) {
+    if (email === null || pass === null || email === undefined || pass === undefined) {
         res.status(400).json("Empty Email or password");
+        return
     }
 
     const userData = await pg.select('*').from('master').where({
@@ -226,11 +227,12 @@ app.post('/login', async (req, res) => {
 app.post("/register", (req, res) => {
 
     const {email, pass } = req.body;
-    let master_hash = bcrypt.hashSync(pass, hashStr);
-    
-    if (email === null || pass === null) {
-        res.json("Empty Email or password");
+    if (email === null || pass === null || email === undefined || pass === undefined) {
+        res.status(400).json("Empty Email or password");
+        return
     }
+    
+    let master_hash = bcrypt.hashSync(pass, hashStr);
   
     let new_user = {
         master_email: email,
@@ -253,8 +255,9 @@ app.post("/del_acc", async(req, res) => {
 
     const {email,pass} = req.body;
 
-    if (email === null || pass === null) {
+    if (email === null || pass === null || email === undefined || pass === undefined) {
         res.status(400).json("Empty Email or password");
+        return
     }
 
     const userData = await pg.select('*').from('master').where({

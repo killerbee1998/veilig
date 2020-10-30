@@ -25,6 +25,7 @@ app.use(bodyParser.json())
 
 // local modules
 const {passgen} = require("./passgen")
+const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
 
 // root 
 app.get('/', (req, res) => {
@@ -39,21 +40,10 @@ app.get('/pass/len=:len/passFlags=:flags', (req, res) => {
         res.send(400).json("Length out of bounds")
     }
 
-    if (flags.length != 3) {
-        res.send(400).json("Incorrect passFLags format")
-    }
-
-    if (!(flags[0] == '0' || flags[0] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
+    if(!(passFlagsChecker(flags))){
         res.send(400).json("Incorrect passFlags format")
     }
 
-    
     const pass = passgen(len, flags)
 
     res.status(200).json(pass)
@@ -67,7 +57,6 @@ app.get('/pass/len=:len/', (req, res) => {
         res.send(400).json("Length out of bounds")
     }
 
-    
     const pass = passgen(len, '111')
 
     res.status(200).json(pass)
@@ -76,18 +65,7 @@ app.get('/pass/len=:len/', (req, res) => {
 app.get('/pass/passFlags=:flags', (req, res) => {
     let {flags} = req.params
 
-    
-    if (flags.length != 3) {
-        correctFlags = false
-    }
-
-    if (!(flags[0] == '0' || flags[0] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
+    if(!(passFlagsChecker(flags))){
         res.send(400).json("Incorrect passFlags format")
     }
     const pass = passgen('10', flags)
@@ -112,17 +90,7 @@ app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res) => {
         res.send(400).json("Length out of bounds")
     }
 
-    if (flags.length != 3) {
-        res.send(400).json("Incorrect passFLags format")
-    }
-
-    if (!(flags[0] == '0' || flags[0] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
+    if(!(passFlagsChecker(flags))){
         res.send(400).json("Incorrect passFlags format")
     }
 
@@ -159,18 +127,8 @@ app.get('/passphrase/n_words=:n_words', (req, res) => {
 
 app.get('/passphrase/passFlags=:flags', (req, res) => {
     let {flags} = req.params
-
-    if (flags.length != 3) {
-        res.send(400).json("Incorrect passFLags format")
-    }
-
-    if (!(flags[0] == '0' || flags[0] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
-        res.send(400).json("Incorrect passFlags format")
-    }
-    if (!(flags[1] == '0' || flags[1] == '1')) {
+    
+    if(!(passFlagsChecker(flags))){
         res.send(400).json("Incorrect passFlags format")
     }
 

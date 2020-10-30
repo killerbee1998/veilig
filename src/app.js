@@ -53,8 +53,8 @@ app.get('/pass/len=:len/passFlags=:flags', (req, res) => {
         res.send(400).json("Incorrect passFlags format")
     }
 
-    const passgen = require('./passgen')
-    const pass = passgen.passgen(len, flags)
+    
+    const pass = passgen(len, flags)
 
     res.status(200).json(pass)
 })
@@ -67,8 +67,8 @@ app.get('/pass/len=:len/', (req, res) => {
         res.send(400).json("Length out of bounds")
     }
 
-    const passgen = require('./passgen')
-    const pass = passgen.passgen(len, '111')
+    
+    const pass = passgen(len, '111')
 
     res.status(200).json(pass)
 })
@@ -76,8 +76,9 @@ app.get('/pass/len=:len/', (req, res) => {
 app.get('/pass/passFlags=:flags', (req, res) => {
     let {flags} = req.params
 
+    
     if (flags.length != 3) {
-        res.send(400).json("Incorrect passFLags format")
+        correctFlags = false
     }
 
     if (!(flags[0] == '0' || flags[0] == '1')) {
@@ -89,15 +90,14 @@ app.get('/pass/passFlags=:flags', (req, res) => {
     if (!(flags[1] == '0' || flags[1] == '1')) {
         res.send(400).json("Incorrect passFlags format")
     }
-    const passgen = require('./passgen')
-    const pass = passgen.passgen('10', flags)
+    const pass = passgen('10', flags)
 
     res.status(200).json(pass)
 })
 
 app.get('/pass', (req, res) => {
-    const passgen = require('./passgen')
-    const pass = passgen.passgen('10', '111')
+    
+    const pass = passgen('10', '111')
 
     res.status(200).json(pass)
 })

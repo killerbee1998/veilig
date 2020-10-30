@@ -24,9 +24,9 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 // local modules
-const {passgen} = require("./gen_pass/passgen")
+const {passgen} = require("./gen_pass/passGen")
 const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
-const {get_random_word} = require('./gen_pass/get_word')
+const {get_random_word} = require('./gen_pass/getWord')
 
 // root 
 app.get('/', (req, res) => {

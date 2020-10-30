@@ -23,65 +23,17 @@ const hashStr = 10;
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-// local modules
-const {passgen} = require("./gen_pass/passGen")
-const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
+// load routes
+let passPaths = require('./passRoutes')
+app.use('/pass', passPaths)
+
 const {get_random_word} = require('./gen_pass/getWord')
+const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
 
 // root 
 app.get('/', (req, res) => {
     res.status(200).json("This is root path")
 })
-
-// password func(MAIN)
-app.get('/pass/len=:len/passFlags=:flags', (req, res) => {
-    let {len,flags} = req.params
-
-    if (len < 5 || len > 200) {
-        res.send(400).json("Length out of bounds")
-    }
-
-    if(!(passFlagsChecker(flags))){
-        res.send(400).json("Incorrect passFlags format")
-    }
-
-    const pass = passgen(len, flags)
-
-    res.status(200).json(pass)
-})
-
-// passfunc(alt routes)
-app.get('/pass/len=:len/', (req, res) => {
-    let {len} = req.params
-
-    if (len < 5 || len > 200) {
-        res.send(400).json("Length out of bounds")
-    }
-
-    const pass = passgen(len, '111')
-
-    res.status(200).json(pass)
-})
-
-app.get('/pass/passFlags=:flags', (req, res) => {
-    let {flags} = req.params
-
-    if(!(passFlagsChecker(flags))){
-        res.send(400).json("Incorrect passFlags format")
-    }
-    const pass = passgen('10', flags)
-
-    res.status(200).json(pass)
-})
-
-app.get('/pass', (req, res) => {
-    
-    const pass = passgen('10', '111')
-
-    res.status(200).json(pass)
-})
-
-
 
 // passphrase func
 app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res) => {

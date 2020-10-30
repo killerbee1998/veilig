@@ -17,14 +17,14 @@ const hashStr = 10;
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-// load password generation routes
-app.use('/passphrase', require('./gen_pass/routes/passphraseRoutes'))
-app.use('/pass', require('./gen_pass/routes/passRoutes'))
-
 // root 
 app.get('/', (req, res) => {
     res.status(200).json("This is root path")
 })
+
+// load password generation routes
+app.use('/passphrase', require('./gen_pass/routes/passphraseRoutes'))
+app.use('/pass', require('./gen_pass/routes/passRoutes'))
 
 // user signin function
 app.post('/login', async (req, res) => {

@@ -26,6 +26,7 @@ app.use(bodyParser.json())
 // local modules
 const {passgen} = require("./passgen")
 const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
+const {get_random_word} = require('./get_word')
 
 // root 
 app.get('/', (req, res) => {
@@ -94,13 +95,11 @@ app.get('/passphrase/n_words=:n_words/passFlags=:flags', (req, res) => {
         res.send(400).json("Incorrect passFlags format")
     }
 
-    const get_word = require('./get_word')
-
     let passphrase = ''
     for (let i = 0; i < n_words - 1; ++i) {
-        passphrase += get_word.get_random_word(flags) + '-'
+        passphrase += get_random_word(flags) + '-'
     }
-    passphrase += get_word.get_random_word(flags)
+    passphrase += get_random_word(flags)
 
     res.status(200).json(passphrase)
 })
@@ -113,13 +112,11 @@ app.get('/passphrase/n_words=:n_words', (req, res) => {
         res.send(400).json("Length out of bounds")
     }
 
-    const get_word = require('./get_word')
-
     let passphrase = ''
     for (let i = 0; i < n_words - 1; ++i) {
-        passphrase += get_word.get_random_word('000') + '-'
+        passphrase += get_random_word('000') + '-'
     }
-    passphrase += get_word.get_random_word('000')
+    passphrase += get_random_word('000')
 
     res.status(200).json(passphrase)
 })
@@ -132,25 +129,22 @@ app.get('/passphrase/passFlags=:flags', (req, res) => {
         res.send(400).json("Incorrect passFlags format")
     }
 
-    const get_word = require('./get_word')
-
     let passphrase = ''
     for (let i = 0; i < 2; ++i) {
-        passphrase += get_word.get_random_word(flags) + '-'
+        passphrase += get_random_word(flags) + '-'
     }
-    passphrase += get_word.get_random_word(flags)
+    passphrase += get_random_word(flags)
 
     res.status(200).json(passphrase)
 })
 
 app.get('/passphrase/', (req, res) => {
-    const get_word = require('./get_word')
 
     let passphrase = ''
     for (let i = 0; i < 2; ++i) {
-        passphrase += get_word.get_random_word('000') + '-'
+        passphrase += get_random_word('000') + '-'
     }
-    passphrase += get_word.get_random_word('000')
+    passphrase += get_random_word('000')
 
     res.status(200).json(passphrase)
 })

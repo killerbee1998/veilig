@@ -3,8 +3,8 @@ const express = require("express")
 const passphraseRoutes = express.Router()
 
 // local modules
-const {get_random_word} = require('./gen_pass/getWord')
-const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
+const {get_random_word} = require('../utils/getWord')
+const {passFlagsChecker} = require('../utils/passFlagsChecker')
 
 // passphrase func
 passphraseRoutes.get('/n_words=:n_words/passFlags=:flags', (req, res) => {

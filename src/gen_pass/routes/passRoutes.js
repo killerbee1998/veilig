@@ -3,8 +3,8 @@ const express = require("express")
 const passRoutes = express.Router()
 
 // local modules
-const {passgen} = require("./gen_pass/passGen")
-const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
+const {passgen} = require("../utils/passGen")
+const {passFlagsChecker} = require('../utils/passFlagsChecker')
 
 // password func(MAIN)
 passRoutes.get('/len=:len/passFlags=:flags', (req, res) => {

@@ -23,9 +23,9 @@ const hashStr = 10;
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-// load routes
-const passPaths = require('./passRoutes')
-app.use('/pass', passPaths)
+// load password generation routes
+app.use('/passphrase', require('./gen_pass/routes/passphraseRoutes'))
+app.use('/pass', require('./gen_pass/routes/passRoutes'))
 
 // root 
 app.get('/', (req, res) => {

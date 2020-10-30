@@ -7,7 +7,7 @@ const {get_random_word} = require('./gen_pass/getWord')
 const {passFlagsChecker} = require('./gen_pass/passFlagsChecker')
 
 // passphrase func
-app.get('/n_words=:n_words/passFlags=:flags', (req, res) => {
+passphraseRoutes.get('/n_words=:n_words/passFlags=:flags', (req, res) => {
     let {n_words,flags} = req.params
 
     if (n_words < 3 || n_words > 20) {
@@ -28,7 +28,7 @@ app.get('/n_words=:n_words/passFlags=:flags', (req, res) => {
 })
 
 // passphrase function(alt routes)
-app.get('/n_words=:n_words', (req, res) => {
+passphraseRoutes.get('/n_words=:n_words', (req, res) => {
     let {n_words} = req.params
 
     if (n_words < 3 || n_words > 20) {
@@ -45,7 +45,7 @@ app.get('/n_words=:n_words', (req, res) => {
 })
 
 
-app.get('/passFlags=:flags', (req, res) => {
+passphraseRoutes.get('/passFlags=:flags', (req, res) => {
     let {flags} = req.params
     
     if(!(passFlagsChecker(flags))){
@@ -61,7 +61,7 @@ app.get('/passFlags=:flags', (req, res) => {
     res.status(200).json(passphrase)
 })
 
-app.get('/', (req, res) => {
+passphraseRoutes.get('/', (req, res) => {
 
     let passphrase = ''
     for (let i = 0; i < 2; ++i) {

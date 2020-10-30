@@ -17,11 +17,11 @@ Using this returns a passphrase with the desired number of words and intended fl
 
 **POST requests**
 
-1. /register -> Path to register user. 2 Arguments in JSON body( email: email of user, pass: password of user)
+1. account/register -> Path to register user. 2 Arguments in JSON body( email: email of user, pass: password of user)
 An user can only register once. attempting to register multiple times will yield a REGISTRATION ERROR.
 Empty emails/passwords will also yield a REGISTRATION ERROR
 
-2. /login -> Path to login user. 2 Arguments in JSON body( email: email of user, pass: password of user)
+2. account/login -> Path to login user. 2 Arguments in JSON body( email: email of user, pass: password of user)
 Wrong/Empty emails/passwords will  yield a LOGIN ERROR
 
 

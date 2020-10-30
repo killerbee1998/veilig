@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
 })
 
 // load password generation routes
-app.use('/passphrase', require('./gen_pass/routes/passphraseRoutes'))
-app.use('/pass', require('./gen_pass/routes/passRoutes'))
+app.use('/passphrase', require('./genPass/routes/passphraseRoutes'))
+app.use('/pass', require('./genPass/routes/passRoutes'))
 
 // user signin function
 app.post('/login', async (req, res) => {

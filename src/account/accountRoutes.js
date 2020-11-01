@@ -71,19 +71,17 @@ accountRoutes.post("/register", async (req, res) => {
             master_hash: master_hash
         }
         
-        pg('master')
-        .insert(new_user)
-        .then( () =>{
+        try{
+            let result = await pg('master').insert(new_user)
             res.status(200).json("REGISTERED");
-            pg.destroy()
-            return
-        })
-        .catch( (err) =>{
+        }catch(err){
+            console.log(err)
             res.status(400).json("REGISTRATION ERROR")
-            pg.destroy()
-            return
-        });
+        }
         
+        pg.destroy()
+        return
+
     }
       
 })

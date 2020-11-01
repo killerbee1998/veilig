@@ -109,19 +109,15 @@ accountRoutes.post("/del_acc", async(req, res) => {
         const userFound = await bcrypt.compare(pass, userData[0].master_hash);
     
         if (userFound) {
-            pg('master')
-            .where({master_email: email})
-            .del()
-            .then( () =>{
+            try{
+                let result = await pg('master').where({master_email: email}).del()
                 res.status(200).json("ACCOUNT DELETED");
-                pg.destroy()
-                return
-            })
-            .catch( (err) =>{
+            }catch(err){
                 res.status(400).json("ACCOUNT DELETETION ERROR")
-                pg.destroy()
-                return
-            });
+            }
+
+            pg.destroy()
+            return
             
         } else {
             res.status(400).json("ACCOUNT DELETETION ERROR")

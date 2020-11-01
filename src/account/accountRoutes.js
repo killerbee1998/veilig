@@ -29,7 +29,7 @@ accountRoutes.post('/login', async (req, res) => {
             master_email: email
         })
         
-        const signinSuccess = bcrypt.compareSync(pass, userData[0].master_hash);
+        const signinSuccess = await bcrypt.compare(pass, userData[0].master_hash);
     
         if (signinSuccess) {
             const mockUser = {

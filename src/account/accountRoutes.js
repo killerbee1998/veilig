@@ -109,7 +109,7 @@ accountRoutes.post("/del_acc", async(req, res) => {
             master_email: email
         })
     
-        const userFound = bcrypt.compareSync(pass, userData[0].master_hash);
+        const userFound = await bcrypt.compare(pass, userData[0].master_hash);
     
         if (userFound) {
             pg('master')

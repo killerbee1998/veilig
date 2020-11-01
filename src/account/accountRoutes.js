@@ -33,16 +33,16 @@ accountRoutes.post('/login', async (req, res) => {
     
         if (signinSuccess) {
             const mockUser = {
-                email: userData[0].master_email,
+                mock_email: email,
+                mock_pass: pass
             }
             res.status(200).json(mockUser)
-            pg.destroy()
-            return
         } else {
             res.status(400).json("LOGIN ERROR")
-            pg.destroy()
-            return
         }
+        
+        pg.destroy()
+        return
 
     }
 

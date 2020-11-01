@@ -29,27 +29,27 @@ accountRoutes.post('/login', async (req, res) => {
             master_email: email
         })
         
-        const signinSuccess = bcrypt.compareSync(pass, userData[0].master_hash);
+        const signinSuccess = await bcrypt.compare(pass, userData[0].master_hash);
     
         if (signinSuccess) {
             const mockUser = {
-                email: userData[0].master_email,
+                mock_email: email,
+                mock_pass: pass
             }
             res.status(200).json(mockUser)
-            pg.destroy()
-            return
         } else {
             res.status(400).json("LOGIN ERROR")
-            pg.destroy()
-            return
         }
+        
+        pg.destroy()
+        return
 
     }
 
 })
 
 //register func
-accountRoutes.post("/register", (req, res) => {
+accountRoutes.post("/register", async (req, res) => {
 
     const {email, pass } = req.body;
     if (email === null || pass === null || email === undefined || pass === undefined) {
@@ -64,26 +64,23 @@ accountRoutes.post("/register", (req, res) => {
             }
         });
 
-        let master_hash = bcrypt.hashSync(pass, hashStr);
+        let master_hash = await bcrypt.hash(pass, hashStr);
   
         let new_user = {
             master_email: email,
             master_hash: master_hash
         }
         
-        pg('master')
-        .insert(new_user)
-        .then( () =>{
+        try{
+            let result = await pg('master').insert(new_user)
             res.status(200).json("REGISTERED");
-            pg.destroy()
-            return
-        })
-        .catch( (err) =>{
+        }catch(err){
             res.status(400).json("REGISTRATION ERROR")
-            pg.destroy()
-            return
-        });
+        }
         
+        pg.destroy()
+        return
+
     }
       
 })
@@ -109,22 +106,18 @@ accountRoutes.post("/del_acc", async(req, res) => {
             master_email: email
         })
     
-        const userFound = bcrypt.compareSync(pass, userData[0].master_hash);
+        const userFound = await bcrypt.compare(pass, userData[0].master_hash);
     
         if (userFound) {
-            pg('master')
-            .where({master_email: email})
-            .del()
-            .then( () =>{
+            try{
+                let result = await pg('master').where({master_email: email}).del()
                 res.status(200).json("ACCOUNT DELETED");
-                pg.destroy()
-                return
-            })
-            .catch( (err) =>{
+            }catch(err){
                 res.status(400).json("ACCOUNT DELETETION ERROR")
-                pg.destroy()
-                return
-            });
+            }
+
+            pg.destroy()
+            return
             
         } else {
             res.status(400).json("ACCOUNT DELETETION ERROR")

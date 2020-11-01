@@ -49,7 +49,7 @@ accountRoutes.post('/login', async (req, res) => {
 })
 
 //register func
-accountRoutes.post("/register", (req, res) => {
+accountRoutes.post("/register", async (req, res) => {
 
     const {email, pass } = req.body;
     if (email === null || pass === null || email === undefined || pass === undefined) {
@@ -64,7 +64,7 @@ accountRoutes.post("/register", (req, res) => {
             }
         });
 
-        let master_hash = bcrypt.hashSync(pass, hashStr);
+        let master_hash = await bcrypt.hash(pass, hashStr);
   
         let new_user = {
             master_email: email,

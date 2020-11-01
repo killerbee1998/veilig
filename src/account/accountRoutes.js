@@ -75,7 +75,6 @@ accountRoutes.post("/register", async (req, res) => {
             let result = await pg('master').insert(new_user)
             res.status(200).json("REGISTERED");
         }catch(err){
-            console.log(err)
             res.status(400).json("REGISTRATION ERROR")
         }
         

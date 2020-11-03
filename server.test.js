@@ -350,6 +350,40 @@ describe('All Store Func', () =>{
         user_pass: 'test'
     }
 
+    test('/store/savePass with invalid token', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let savePass_body = {
+            user_url: '',
+            user_name: '',
+            user_pass: 'test',
+            token: '',
+            authKey: key
+        }
+
+        const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
+        expect(savePass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/savePass with invalid key', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let savePass_body = {
+            user_url: '',
+            user_name: '',
+            user_pass: 'test',
+            token: token,
+            authKey: ''
+        }
+
+        const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
+        expect(savePass_res.statusCode).toBe(400)
+        done()
+    })
+
     test('/store/savePass with correct credentials', async(done) =>{
         const login_res = await req(app).post('/account/login').send(user_body)
         const {token, key} = JSON.parse(login_res.text)
@@ -364,6 +398,20 @@ describe('All Store Func', () =>{
 
         const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
         expect(savePass_res.statusCode).toBe(200)
+        done()
+    })
+    
+    test('/store/displayPass with correct credentials', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let displayPass_body = {
+            token: token,
+            authKey: key
+        }
+
+        const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
+        expect(displayPass_res.statusCode).toBe(200)
         done()
     })
 

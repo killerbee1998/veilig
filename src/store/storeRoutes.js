@@ -16,7 +16,7 @@ storeRoutes.post('/savePass', (req,res)=>{
         master_email = jwt.verify(token, authKey)
 
     }catch{
-        res.status(200).json("INVALID KEY ERROR")
+        res.status(400).json("PASSWORD SAVE ERROR")
         return
     }
 
@@ -37,9 +37,19 @@ storeRoutes.post('/savePass', (req,res)=>{
         master_email: master_email,
         user_url: user_url,
         user_name: user_name,
-
+        user_pass: user_pass
     }
 
+    try{
+        let result = pg('store').insert(user_data)
+        res.status(200).json("PASSWORD SAVED")
+    }catch{
+        res.status(400).json("PASSWORD SAVE ERROR")
+    }
+
+    pg.destroy()
+    return
+    
     
 })
 

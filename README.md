@@ -23,7 +23,11 @@ Empty emails/passwords will also yield a REGISTRATION ERROR
 
 2. account/login -> Path to login user. 2 Arguments in JSON body( email: email of user, pass: password of user)
 Wrong/Empty emails/passwords will  yield a LOGIN ERROR
+Returns a jwt token with its key for auth.
 
+3. account/del_acc -> Path to delete a user from the database.2 Arguments in JSON body( email: email of user, pass: password of user)
+Wrong/Empty emails/passwords will  yield a ACCOUNT DELETETION ERROR
+ 
 
 **Flag Descriptions:**
     

@@ -13,13 +13,34 @@ storeRoutes.post('/savePass', (req,res)=>{
     let master_email = ""
 
     try{
-        master_email = jwt.verify(token)
+        master_email = jwt.verify(token, authKey)
 
     }catch{
         res.status(200).json("INVALID KEY ERROR")
         return
     }
 
+    const pg = knex({
+        client: 'pg',
+        connection: {
+            connectionString: process.env.DATABASE_URL
+        }
+    });
+
+    let store_id = ""
+    for(let i=0;i<13;++i){
+        store_id += String.fromCharCode(Math.random() * (122-98)+ 97)
+    }
+
+    let user_data ={
+        store_id: store_id,
+        master_email: master_email,
+        user_url: user_url,
+        user_name: user_name,
+
+    }
+
+    
 })
 
 module.exports = storeRoutes

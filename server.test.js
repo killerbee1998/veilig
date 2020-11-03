@@ -293,3 +293,43 @@ describe("All login func", ()=>{
         done()
     })
 })
+
+describe('Root path', () =>{
+    test("Root Path", async (done) =>{
+        const res = await req(app).get('/')
+        expect(res.statusCode).toBe(200)
+        done()
+    })
+})
+
+describe('All Store Func', () =>{
+    const user_body = {
+        "email": "test@test",
+        "pass": "test"
+    }
+
+    const user_data ={
+        store_id: 'test',
+        master_email: 'test@test',
+        user_url: '',
+        user_name: '',
+        user_pass: 'test'
+    }
+
+    test('/store/savePass with correct credentials', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let savePass_body = {
+            user_url: '',
+            user_name: '',
+            user_pass: 'test',
+            token: token,
+            authKey: key
+        }
+
+        const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
+        expect(savePass_res.statusCode).toBe(200)
+        done()
+    })
+})

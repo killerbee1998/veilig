@@ -411,7 +411,7 @@ describe('All Store Func', () =>{
         }
 
         const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
-        expect(displayPass_res.statusCode).toBe(200)
+        expect(displayPass_res.statusCode).toBe(400)
         done()
     })
 
@@ -425,7 +425,7 @@ describe('All Store Func', () =>{
         }
 
         const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
-        expect(displayPass_res.statusCode).toBe(200)
+        expect(displayPass_res.statusCode).toBe(400)
         done()
     })
 

@@ -116,6 +116,12 @@ accountRoutes.post("/del_acc", async(req, res) => {
         const userData = await pg.select('*').from('master').where({
             master_email: email
         })
+
+        if(userData === null || userData === undefined || userData.length === 0){
+            res.status(400).json("ACCOUNT DELETETION ERROR");
+            pg.destroy()
+            return
+        }
     
         const userFound = await bcrypt.compare(pass, userData[0].master_hash);
     

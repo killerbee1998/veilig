@@ -32,13 +32,7 @@ storeRoutes.post('/savePass', async(req,res)=>{
         }
     });
 
-    let store_id = ""
-    for(let i=0;i<13;++i){
-        store_id += String.fromCharCode(Math.random() * (122-98)+ 97)
-    }
-
     let user_data ={
-        store_id: store_id,
         master_email: master_email,
         user_url: user_url,
         user_name: user_name,

@@ -21,5 +21,8 @@ app.use('/pass', require('./genPass/routes/passRoutes'))
 
 // load account routes
 app.use('/account', require('./account/accountRoutes'))
+
+// load store routes
+app.use('/store', require('./store/storeRoutes'))
   
 module.exports.app = app

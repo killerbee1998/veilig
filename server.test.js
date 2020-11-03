@@ -1,5 +1,4 @@
 const app = require('./src/app').app
-const pg = require("./src/app").pg
 const req = require('supertest')
 
 describe('Root path', () =>{
@@ -231,6 +230,16 @@ describe("All login func", ()=>{
         "pass": "A"
     }
 
+    const user_body_wrong_pass = {
+        "email": "a@a",
+        "pass": "a"
+    }
+
+    const user_body_wrong_email = {
+        "email": "A@A",
+        "pass": "A"
+    }
+
     const user_only_email = {"email": "a@a"}
     const user_only_pass = {"pass": "A"}
 
@@ -276,6 +285,18 @@ describe("All login func", ()=>{
         done()
     })
 
+    test("Login with user_body_wrong_pass", async(done) =>{
+        const res = await req(app).post('/account/login').send(user_body_wrong_pass)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
+    test("Login with user_body_wrong_email", async(done) =>{
+        const res = await req(app).post('/account/login').send(user_body_wrong_email)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
     test("Delete Acc with user_only_email", async(done) =>{
         const res = await req(app).post('/account/del_acc').send(user_only_email)
         expect(res.statusCode).toBe(400)
@@ -288,9 +309,183 @@ describe("All login func", ()=>{
         done()
     })
 
+    test("Delete acc user_body_wrong_pass", async(done) =>{
+        const res = await req(app).post('/account/del_acc').send(user_body_wrong_pass)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
+    test("Delete acc user_body_wrong_email", async(done) =>{
+        const res = await req(app).post('/account/del_acc').send(user_body_wrong_email)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
     test("Delete acc user_body", async(done) =>{
         const res = await req(app).post('/account/del_acc').send(user_body)
         expect(res.statusCode).toBe(200)
         done()
     })
+})
+
+describe('Root path', () =>{
+    test("Root Path", async (done) =>{
+        const res = await req(app).get('/')
+        expect(res.statusCode).toBe(200)
+        done()
+    })
+})
+
+describe('All Store Func', () =>{
+    const user_body = {
+        "email": "test@test",
+        "pass": "test"
+    }
+
+    const user_data ={
+        store_id: 'test',
+        master_email: 'test@test',
+        user_url: '',
+        user_name: '',
+        user_pass: 'test'
+    }
+
+    test('/store/savePass with invalid token', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let savePass_body = {
+            user_url: '',
+            user_name: '',
+            user_pass: 'test',
+            token: '',
+            authKey: key
+        }
+
+        const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
+        expect(savePass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/savePass with invalid key', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let savePass_body = {
+            user_url: '',
+            user_name: '',
+            user_pass: 'test',
+            token: token,
+            authKey: ''
+        }
+
+        const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
+        expect(savePass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/savePass with correct credentials', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let savePass_body = {
+            user_url: '',
+            user_name: '',
+            user_pass: 'test',
+            token: token,
+            authKey: key
+        }
+
+        const savePass_res = await req(app).post('/store/savePass').send(savePass_body)
+        expect(savePass_res.statusCode).toBe(200)
+        done()
+    })
+
+    test('/store/displayPass with invalid token', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let displayPass_body = {
+            token: '',
+            authKey: key
+        }
+
+        const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
+        expect(displayPass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/displayPass with invalid key', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let displayPass_body = {
+            token: token,
+            authKey: ''
+        }
+
+        const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
+        expect(displayPass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/displayPass with correct credentials', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let displayPass_body = {
+            token: token,
+            authKey: key
+        }
+
+        const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
+        expect(displayPass_res.statusCode).toBe(200)
+        done()
+    })
+
+    test('/store/delPass with invalid token', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let delPass_body = {
+            token: '',
+            authKey: key,
+            store_id: 1
+        }
+
+        const delPass_res = await req(app).post('/store/delPass').send(delPass_body)
+        expect(delPass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/delPass with invalid key', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let delPass_body = {
+            token: token,
+            authKey: '',
+            store_id: 1
+        }
+
+        const delPass_res = await req(app).post('/store/delPass').send(delPass_body)
+        expect(delPass_res.statusCode).toBe(400)
+        done()
+    })
+
+    test('/store/delPass with correct credentials', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let delPass_body = {
+            token: token,
+            authKey: key,
+            store_id: 1
+        }
+
+        const delPass_res = await req(app).post('/store/delPass').send(delPass_body)
+        expect(delPass_res.statusCode).toBe(200)
+        done()
+    })
+    
 })

@@ -18,7 +18,7 @@ accountRoutes.post('/login', async (req, res) => {
     const {email,pass} = req.body;
 
     if (email === null || pass === null || email === undefined || pass === undefined) {
-        res.status(400).json("Empty Email or password");
+        res.status(400).json("LOGIN ERROR");
         return
     }else{
         const pg = knex({
@@ -31,6 +31,12 @@ accountRoutes.post('/login', async (req, res) => {
         const userData = await pg.select('*').from('master').where({
             master_email: email
         })
+
+        if(userData === null || userData === undefined || userData.length === 0){
+            res.status(400).json("LOGIN ERROR");
+            pg.destroy()
+            return
+        }
         
         const signinSuccess = await bcrypt.compare(pass, userData[0].master_hash);
     
@@ -40,7 +46,7 @@ accountRoutes.post('/login', async (req, res) => {
                 authKey += String.fromCharCode(Math.random() * (122-98)+ 97)
             }
 
-            const token = jwt.sign({ email: email }, authKey, {expiresIn: '12h'});
+            const token = jwt.sign({ email: email, pass:pass }, authKey, {expiresIn: '12h'});
             res.status(200).json({token: token, key: authKey})
         } else {
             res.status(400).json("LOGIN ERROR")
@@ -110,6 +116,12 @@ accountRoutes.post("/del_acc", async(req, res) => {
         const userData = await pg.select('*').from('master').where({
             master_email: email
         })
+
+        if(userData === null || userData === undefined || userData.length === 0){
+            res.status(400).json("ACCOUNT DELETETION ERROR");
+            pg.destroy()
+            return
+        }
     
         const userFound = await bcrypt.compare(pass, userData[0].master_hash);
     

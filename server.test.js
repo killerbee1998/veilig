@@ -368,4 +368,19 @@ describe('All Store Func', () =>{
         expect(displayPass_res.statusCode).toBe(200)
         done()
     })
+
+    test('/store/delPass with correct credentials', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let delPass_body = {
+            token: token,
+            authKey: key,
+            store_id: 1
+        }
+
+        const delPass_res = await req(app).post('/store/delPass').send(delPass_body)
+        expect(delPass_res.statusCode).toBe(200)
+        done()
+    })
 })

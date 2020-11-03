@@ -309,6 +309,18 @@ describe("All login func", ()=>{
         done()
     })
 
+    test("Delete acc user_body_wrong_pass", async(done) =>{
+        const res = await req(app).post('/account/del_acc').send(user_body_wrong_pass)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
+    test("Delete acc user_body_wrong_email", async(done) =>{
+        const res = await req(app).post('/account/del_acc').send(user_body_wrong_email)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
     test("Delete acc user_body", async(done) =>{
         const res = await req(app).post('/account/del_acc').send(user_body)
         expect(res.statusCode).toBe(200)

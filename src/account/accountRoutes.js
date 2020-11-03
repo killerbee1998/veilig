@@ -46,7 +46,7 @@ accountRoutes.post('/login', async (req, res) => {
                 authKey += String.fromCharCode(Math.random() * (122-98)+ 97)
             }
 
-            const token = jwt.sign({ email: email }, authKey, {expiresIn: '12h'});
+            const token = jwt.sign({ email: email, pass:pass }, authKey, {expiresIn: '12h'});
             res.status(200).json({token: token, key: authKey})
         } else {
             res.status(400).json("LOGIN ERROR")

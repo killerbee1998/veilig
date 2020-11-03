@@ -400,14 +400,28 @@ describe('All Store Func', () =>{
         expect(savePass_res.statusCode).toBe(200)
         done()
     })
-    
-    test('/store/displayPass with correct credentials', async(done) =>{
+
+    test('/store/displayPass with invalid token', async(done) =>{
+        const login_res = await req(app).post('/account/login').send(user_body)
+        const {token, key} = JSON.parse(login_res.text)
+
+        let displayPass_body = {
+            token: '',
+            authKey: key
+        }
+
+        const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)
+        expect(displayPass_res.statusCode).toBe(200)
+        done()
+    })
+
+    test('/store/displayPass with invalid key', async(done) =>{
         const login_res = await req(app).post('/account/login').send(user_body)
         const {token, key} = JSON.parse(login_res.text)
 
         let displayPass_body = {
             token: token,
-            authKey: key
+            authKey: ''
         }
 
         const displayPass_res = await req(app).post('/store/displayPass').send(displayPass_body)

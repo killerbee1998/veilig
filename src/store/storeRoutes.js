@@ -52,7 +52,7 @@ storeRoutes.post('/savePass', async(req,res)=>{
     
 })
 
-storeRoutes.search('/displayPass', async(req,res)=>{
+storeRoutes.post('/displayPass', async(req,res)=>{
     const {token, authKey} = req.body
 
     let master_email = ''

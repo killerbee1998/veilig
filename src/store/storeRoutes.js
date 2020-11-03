@@ -52,4 +52,40 @@ storeRoutes.post('/savePass', async(req,res)=>{
     
 })
 
+storeRoutes.post('/displayPass', async(req,res)=>{
+    const {token, authKey} = req.body
+
+    let master_email = ''
+    let master_pass = ''
+    try{
+        const {email, pass} = jwt.verify(token, authKey)
+        master_email = email
+        master_pass = pass
+    }catch{
+        res.status(400).json("PASSWORD DISPLAY ERROR")
+        return
+    }
+
+    const pg = knex({
+        client: 'pg',
+        connection: {
+            connectionString: process.env.DATABASE_URL
+        }
+    });
+
+    try{
+        let result = await pg.select('user_pass').from('store').where({master_email: master_email})
+        result.map(pass => {
+            aes.decrypt(master_pass, pass)
+        })
+
+        res.status(200).json(result)
+    }catch{
+        res.status(400).json("PASSWORD SAVE ERROR")
+    }
+
+    pg.destroy()
+    return  
+})
+
 module.exports = storeRoutes

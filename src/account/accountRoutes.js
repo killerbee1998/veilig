@@ -18,7 +18,7 @@ accountRoutes.post('/login', async (req, res) => {
     const {email,pass} = req.body;
 
     if (email === null || pass === null || email === undefined || pass === undefined) {
-        res.status(400).json("Empty Email or password");
+        res.status(400).json("LOGIN ERROR");
         return
     }else{
         const pg = knex({
@@ -31,6 +31,12 @@ accountRoutes.post('/login', async (req, res) => {
         const userData = await pg.select('*').from('master').where({
             master_email: email
         })
+
+        if(userData === null || userData === undefined || userData.length === 0){
+            res.status(400).json("LOGIN ERROR");
+            pg.destroy()
+            return
+        }
         
         const signinSuccess = await bcrypt.compare(pass, userData[0].master_hash);
     

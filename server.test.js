@@ -230,6 +230,16 @@ describe("All login func", ()=>{
         "pass": "A"
     }
 
+    const user_body_wrong_pass = {
+        "email": "a@a",
+        "pass": "a"
+    }
+
+    const user_body_wrong_email = {
+        "email": "A@A",
+        "pass": "A"
+    }
+
     const user_only_email = {"email": "a@a"}
     const user_only_pass = {"pass": "A"}
 
@@ -272,6 +282,18 @@ describe("All login func", ()=>{
     test("Login with user_body", async(done) =>{
         const res = await req(app).post('/account/login').send(user_body)
         expect(res.statusCode).toBe(200)
+        done()
+    })
+
+    test("Login with user_body_wrong_pass", async(done) =>{
+        const res = await req(app).post('/account/login').send(user_body_wrong_pass)
+        expect(res.statusCode).toBe(400)
+        done()
+    })
+
+    test("Login with user_body_wrong_email", async(done) =>{
+        const res = await req(app).post('/account/login').send(user_body_wrong_email)
+        expect(res.statusCode).toBe(400)
         done()
     })
 

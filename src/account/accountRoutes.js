@@ -5,6 +5,9 @@ const accountRoutes = express.Router()
 // knex db
 const knex = require('knex')
 
+// json web token
+const jwt = require('jsonwebtoken')
+
 //bcrypt
 const bcrypt = require('bcrypt');
 const hashStr = 10;
@@ -32,11 +35,13 @@ accountRoutes.post('/login', async (req, res) => {
         const signinSuccess = await bcrypt.compare(pass, userData[0].master_hash);
     
         if (signinSuccess) {
-            const mockUser = {
-                mock_email: email,
-                mock_pass: pass
+            let authKey = ""
+            for(let i=0;i<13;++i){
+                authKey += String.fromCharCode(Math.random() * (122-98)+ 97)
             }
-            res.status(200).json(mockUser)
+
+            const token = jwt.sign({master_email: email}, authKey, {algorithm: 'RS256'})
+            res.status(200).json({token: token, key: authKey})
         } else {
             res.status(400).json("LOGIN ERROR")
         }

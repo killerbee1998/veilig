@@ -8,13 +8,18 @@ const knex = require('knex')
 // json web token
 const jwt = require('jsonwebtoken')
 
+// aes256
+const aes = require('aes256')
+
 storeRoutes.post('/savePass', async(req,res)=>{
     const {user_url, user_name, user_pass, token, authKey} = req.body
 
     let master_email = ''
+    let master_pass = ''
     try{
-        const {email} = jwt.verify(token, authKey)
+        const {email, pass} = jwt.verify(token, authKey)
         master_email = email
+        master_pass = pass
     }catch{
         res.status(400).json("PASSWORD SAVE ERROR")
         return
@@ -37,12 +42,11 @@ storeRoutes.post('/savePass', async(req,res)=>{
         master_email: master_email,
         user_url: user_url,
         user_name: user_name,
-        user_pass: user_pass
+        user_pass: aes.encrypt(master_pass,user_pass)
     }
 
     try{
         let result = await pg('store').insert(user_data)
-        console.log(result)
         res.status(200).json("PASSWORD SAVED")
     }catch{
         res.status(400).json("PASSWORD SAVE ERROR")

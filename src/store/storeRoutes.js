@@ -88,4 +88,37 @@ storeRoutes.post('/displayPass', async(req,res)=>{
     return  
 })
 
+storeRoutes.post('/delPass', async(req,res)=>{
+    const {token, authKey, store_id} = req.body
+
+    let master_email = ''
+    let master_pass = ''
+    try{
+        const {email, pass} = jwt.verify(token, authKey)
+        master_email = email
+        master_pass = pass
+    }catch{
+        res.status(400).json("PASSWORD DELETETION ERROR")
+        return
+    }
+
+    const pg = knex({
+        client: 'pg',
+        connection: {
+            connectionString: process.env.DATABASE_URL
+        }
+    });
+
+    try{
+        let result = await pg('store').where({store_id: store_id}).del()
+        res.status(200).json("PASSWORD DELETED");
+    }catch(err){
+        res.status(400).json("PASSWORD DELETETION ERROR")
+    }
+
+    pg.destroy()
+    return
+
+})
+
 module.exports = storeRoutes

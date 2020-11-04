@@ -27,6 +27,9 @@ Returns a jwt token with its key for auth.
 
 3. account/del_acc -> Path to delete a user from the database.2 Arguments in JSON body( email: email of user, pass: password of user)
 Wrong/Empty emails/passwords will  yield a ACCOUNT DELETETION ERROR
+
+4. store/savePass -> Path to save user password. 5 arguments in body( user_url: url of user password(can be blank),user_url: username of user password(can be blank), user_pass: password to be saved, token: jwt token gained from login, key: jwt key gained from login)
+Wrong/Empty tokens and keys result in PASSWORD SAVE ERROR
  
 
 **Flag Descriptions:**

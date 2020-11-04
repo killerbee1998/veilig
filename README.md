@@ -34,6 +34,8 @@ Wrong/Empty tokens and keys result in PASSWORD SAVE ERROR
 5. store/displayPass -> Path to display user password. 2 arguments in body( token: jwt token gained from login, key: jwt key gained from login)
 Wrong/Empty tokens and keys result in PASSWORD DISPLAY ERROR
 
+6. store/delPass -> Path to delete user password. 3 arguments in body( token: jwt token gained from login, key: jwt key gained from login, store_id: store_id of password to be deleted)
+Wrong/Empty tokens and keys result in PASSWORD DELETETION ERROR
  
 
 **Flag Descriptions:**

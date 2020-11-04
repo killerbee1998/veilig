@@ -74,14 +74,16 @@ storeRoutes.post('/displayPass', async(req,res)=>{
     });
 
     try{
-        let result = await pg.select('user_pass').from('store').where({master_email: master_email})
-        result = result.map(pass => {
-            let a = aes.decrypt(master_pass, pass.user_pass)
+        let result = await pg.select('store_id', 'user_pass').from('store').where({master_email: master_email})
+        result = result.map(store_data => {
+            let a ={ store_id: store_data.store_id,
+                    user_pass: aes.decrypt(master_pass, store_data.user_pass)
+                }
             return a
         })
         res.status(200).json(result)
     }catch{
-        res.status(400).json("PASSWORD SAVE ERROR")
+        res.status(400).json("PASSWORD DISPLAY ERROR")
     }
 
     pg.destroy()

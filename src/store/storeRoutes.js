@@ -74,9 +74,11 @@ storeRoutes.post('/displayPass', async(req,res)=>{
     });
 
     try{
-        let result = await pg.select('store_id', 'user_pass').from('store').where({master_email: master_email})
+        let result = await pg.select('store_id', 'user_url','user_pass','user_name').from('store').where({master_email: master_email})
         result = result.map(store_data => {
             let a ={ store_id: store_data.store_id,
+                    user_name: store_data.user_name,
+                    user_url: store_data.user_url,
                     user_pass: aes.decrypt(master_pass, store_data.user_pass)
                 }
             return a

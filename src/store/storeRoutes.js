@@ -36,7 +36,7 @@ storeRoutes.post('/savePass', async(req,res)=>{
         master_email: master_email,
         user_url: user_url,
         user_name: user_name,
-        user_pass: aes.encrypt(user_pass, master_pass)
+        user_pass: aes.encrypt(master_pass, user_pass)
     }
 
     try{

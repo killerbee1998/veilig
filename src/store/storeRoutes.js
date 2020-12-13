@@ -43,7 +43,7 @@ storeRoutes.post('/savePass', async(req,res)=>{
         let result = await pg('store').insert(user_data)
         res.status(200).json("PASSWORD SAVED")
     }catch{
-        res.status(400).json("PASSWORD SAVE ERROR")
+        res.status(400).json("DATABASE ERROR")
     }
 
     pg.destroy()
@@ -85,7 +85,7 @@ storeRoutes.post('/displayPass', async(req,res)=>{
         })
         res.status(200).json(result)
     }catch{
-        res.status(400).json("PASSWORD DISPLAY ERROR")
+        res.status(400).json("DATABASE ERROR")
     }
 
     pg.destroy()
@@ -117,7 +117,7 @@ storeRoutes.post('/delPass', async(req,res)=>{
         let result = await pg('store').where({store_id: store_id}).del()
         res.status(200).json("PASSWORD DELETED");
     }catch(err){
-        res.status(400).json("PASSWORD DELETETION ERROR")
+        res.status(400).json("DATABASE ERROR")
     }
 
     pg.destroy()
